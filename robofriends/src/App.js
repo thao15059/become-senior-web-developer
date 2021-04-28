@@ -1,9 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import './App.css';
+import "./App.css";
 
-import CardList from './component/card-list/card-list.component';
-import SearchBox from './component/searchbox/searchbox.component';
+import CardList from "./component/card-list/card-list.component";
+import SearchBox from "./component/searchbox/searchbox.component";
+import ErrorBoundary from "./component/error-boundary";
 
 class App extends React.Component {
   constructor() {
@@ -11,37 +12,43 @@ class App extends React.Component {
 
     this.state = {
       robots: [],
-      searchField: ''
-    }
+      searchField: "",
+    };
   }
 
-  fetchUrl = async url => {
+  fetchUrl = async (url) => {
     const res = await fetch(url);
     const users = await res.json();
     return users;
-  }
+  };
 
   onSearchChange = (event) => {
     const searchField = event.target.value;
-    this.setState({ searchField })
-  }
+    this.setState({ searchField });
+  };
 
   componentDidMount() {
-    this.fetchUrl('https://jsonplaceholder.typicode.com/users').then(robots => this.setState({ robots }));
+    this.fetchUrl("https://jsonplaceholder.typicode.com/users").then((robots) =>
+      this.setState({ robots })
+    );
   }
 
   render() {
     const { robots, searchField } = this.state;
 
-    const filteredRobots = robots.filter(robot => robot.name.toLowerCase().includes(searchField.toLowerCase()));
+    const filteredRobots = robots.filter((robot) =>
+      robot.name.toLowerCase().includes(searchField.toLowerCase())
+    );
 
     return (
       <div className="App">
         <h1 className="title">ROBOFRIENDS</h1>
-        <SearchBox onSearchChange={this.onSearchChange} />
-        <CardList robots={filteredRobots}/>
+        <ErrorBoundary>
+          <SearchBox onSearchChange={this.onSearchChange} />
+          <CardList robots={filteredRobots} />
+        </ErrorBoundary>
       </div>
-    )
+    );
   }
 }
 
