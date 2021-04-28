@@ -1,0 +1,12 @@
+.card {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    background-color: aquamarine;
+    -webkit-box-shadow: -1px 1px 39px -12px rgba(0,0,0,0.53);
+    -moz-box-shadow: -1px 1px 39px -12px rgba(0,0,0,0.53);
+    box-shadow: -1px 1px 39px -12px rgba(0,0,0,0.53);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
